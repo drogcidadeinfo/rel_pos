@@ -1,4 +1,4 @@
-name: convenio email sender
+name: POS email sender
 
 on:
   workflow_dispatch:
