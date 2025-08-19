@@ -1,0 +1,42 @@
+name: convenio email sender
+
+on:
+  workflow_dispatch:
+  # schedule:
+    # - cron: '0 8 * * *'  # Runs daily at 5am GMT-3
+
+permissions: write-all
+
+jobs:
+  run-scripts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Download PDF files
+        env:
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+        run: python scripts/download_table.py
+
+      - name: Process PDF file and send E-mail
+        env:
+          GSA_CREDENTIALS: ${{ secrets.GSA_CREDENTIALS }}
+          GMAIL_SENDER: ${{ secrets.GMAIL_SENDER }}
+          EMAIL_MAP_BASE64: ${{ secrets.EMAIL_MAP_BASE64 }}
+          EMAIL_BODY: ${{ secrets.EMAIL_BODY }}
+        run: python scripts/edit_and_send.py
