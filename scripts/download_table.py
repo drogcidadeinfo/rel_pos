@@ -153,7 +153,7 @@ try:
         else:
             logging.error("Download failed. No files found.")
             # Take screenshot and save to parent directory
-            parent_dir = os.path.abspath(os.path.join('/convenio/scripts', os.pardir))
+            parent_dir = os.path.abspath(os.path.join('/rel_pos/scripts', os.pardir))
             screenshot_path = os.path.join(parent_dir, f"screenshot_filial{id_value}.png")
             driver.save_screenshot(screenshot_path)
             logging.info(f"Screenshot saved to {screenshot_path}")
