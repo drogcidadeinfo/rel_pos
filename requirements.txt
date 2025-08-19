@@ -1,0 +1,7 @@
+PyPDF2
+google-api-python-client
+google-auth
+google-auth-httplib2
+google-auth-oauthlib
+webdriver-manager
+selenium
